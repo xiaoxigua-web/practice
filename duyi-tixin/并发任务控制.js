@@ -13,11 +13,23 @@ class SuperTask {
    }
    add(task){
     return new Promise((resolve)=>{
-      if(this.onTasks < 3){
-        task().then
-        this.onTasks++
-      }
+      this.tasks.push({
+        task,
+        resolve
+      })
+      this.run()
     })
+   }
+   run(){
+     if(this.onTasks >= 2) return
+     if(this.tasks.length === 0 ) return
+     let item = this.tasks.shift()
+     this.onTasks++
+      item.task().then(()=>{
+        this.onTasks--
+        item.resolve()
+        this.run()
+      })
    }
 
 }
@@ -25,8 +37,7 @@ class SuperTask {
 const superTask = new SuperTask()
 
 function addTask(time,name){
-   superTask.add(() => delay(time))
-   .then(()=>{
+   superTask.add(() => delay(time)).then(()=>{
      console.log('任务' + name + '完成！！！')
    })
 }

@@ -5,9 +5,6 @@ Promise.all(arr).then((res)=>{
 })
 
 Promise.myall = (params)=>{
-    if(typeof(params)!== 'object' || params === null){
-      return params
-    }
     let reo = null
     let rej = null
     let p = new Promise((resolve,reject)=>{
@@ -25,9 +22,7 @@ Promise.myall = (params)=>{
          if(index === 0){
           reo(result)
          }
-       },(err)=>{
-        rej(err)
-       })
+       },rej)
     }
     if(index === 0){
       reo(params)
