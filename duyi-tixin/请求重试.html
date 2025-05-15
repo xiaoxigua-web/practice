@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function request(url, maxTime = 5) {
+      return fetch(url).catch((err) => {
+        console.log(maxTime);
+       return maxTime <= 0 ? Promise.reject(err) : request(url, maxTime-1)
+      })
+    }
+
+    request('https://jsonplaceholder.typico2de.com/posts/1/comments')
+
+
+
+  </script>
+</body>
+
+</html>
