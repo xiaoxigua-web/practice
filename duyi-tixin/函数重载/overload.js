@@ -1,9 +1,11 @@
 function createOverload(){
   let map = new Map()
   function overload(...args){
+    console.log(this)
     let key = args.map(item=>typeof item).join(',')
     if(map.get(key)){
-      map.get(key).apply(this,args)
+      // map.get(key).apply(this,args)
+      map.get(key)(...args)
     }else{
       throw new Error('no match')
     }

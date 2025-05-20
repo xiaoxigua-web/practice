@@ -2,7 +2,7 @@ import createOverload from './overload.js'
 const getUsers = createOverload()
 
 getUsers.addImpl(()=>{
-  console.log('查询所有用户')
+  console.log(this,'查询所有用户')
 })
 
 const searchPage = (page,size = 10)=>{
