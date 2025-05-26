@@ -1,6 +1,6 @@
 function fn(...args){
-  console.log(this)
-  console.log(args)
+   console.log(this)
+   console.log(args)
 }
 
 fn.call({},1,2,3)
@@ -24,3 +24,15 @@ Function.prototype.myApply = function(ctx,args){
 }
 
 fn.myCall({},[1,2,3])
+
+Function.prototype.bind = function(ctx,...args){
+  let fn = this
+  return function(...params){
+      let arg = [...args,...params]
+      console.log('bind',this)
+      return fn.myCall(Object(ctx),...arg)
+  }
+}
+
+let fn2 = fn.bind({},1,2,3,4,5,6)
+fn2()
