@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class EventEmit{
+       constructor(){
+        this.events = {}
+       }
+       on(eventName,cb){
+         if(!this.events[eventName]){
+            this.events[eventName] = new Set()
+         }
+          this.events[eventName].add(cb)
+       }
+       emit(eventName,...args){
+        let cbs = this.events[eventName]
+        cbs.forEach(cb => {
+            cb(...args)
+        });
+
+       }
+       once(eventName,cb){
+          const fn = ()=>{
+            cb()
+            this.off(eventName)
+          }
+          this.on(eventName,fn)
+       }
+       off(eventName,cb){
+        this.events[eventName].delete(cb)
+       }
+    }
+  </script>
+</body>
+</html>
