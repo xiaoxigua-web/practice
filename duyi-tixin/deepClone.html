@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let cache = new WeakMap();
+
+      function deepClone(value) {
+        if (typeof value !== "object" || value === null) {
+          return value;
+        }
+        if (cache.get(value)) {
+          return cache.get(value);
+        }
+        let obj = Array.isArray(value) ? [] : {};
+        Object.setPrototypeOf(obj, Object.getPrototypeOf(value));
+        cache.set(value, obj);
+        for (let k in value) {
+          if(value.hasOwnProperty(k)){
+            obj[k] = deepClone(value[k]);
+          }
+        }
+
+        return obj;
+      }
+
+      let a = { b: 1 };
+      console.log(deepClone(a));
+    </script>
+  </body>
+</html>

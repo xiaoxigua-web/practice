@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let treeData = [
+      {
+        id:1,
+        pid:0
+      },
+      {
+        id:2,
+        pid:0
+      },
+      {
+        id:3,
+        pid:1
+      },
+      {
+        id:4,
+        pid:3
+      },
+    ]
+
+    function arrToTree(arr){
+      let obj = {}
+      arr.map((item)=>{
+        obj[item.id] = item
+      })
+      let result = []
+      arr.map((item)=>{
+        let parent = item.pid
+        if(!parent){
+          result.push(item)
+        }else{
+          let val = obj[item.pid]
+          if(!val.children){
+            val.children = []
+          }
+          val.children.push(item)
+        }
+      })
+      return result
+    }
+
+    console.log(arrToTree(treeData))
+
+  </script>
+</body>
+</html>
